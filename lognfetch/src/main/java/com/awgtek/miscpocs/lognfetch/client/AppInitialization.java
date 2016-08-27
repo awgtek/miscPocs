@@ -8,6 +8,8 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.PropertyConfigurator;
 
 import com.netflix.config.ConfigurationManager;
+import com.netflix.hystrix.contrib.servopublisher.HystrixServoMetricsPublisher;
+import com.netflix.hystrix.strategy.HystrixPlugins;
 
 import net.sf.ehcache.CacheManager;
 
@@ -25,6 +27,9 @@ public class AppInitialization implements ServletContextListener {
 		}
 		//initialize EHCache
 		CacheManager.newInstance();
+		
+		// Registry plugin with hystrix
+		HystrixPlugins.getInstance().registerMetricsPublisher(HystrixServoMetricsPublisher.getInstance());
 	}
 
 	@Override

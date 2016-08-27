@@ -21,7 +21,7 @@ public class Tester {
 		System.out.println(output);
 		
 		webResource = client
-				.resource("http://localhost:8080/lognfetch/jaxrslog/lognfetch/222");
+				.resource("http://localhost:8080/lognfetch/jaxrslog/lognfetch/2");
 		response = webResource.accept("application/json").get(ClientResponse.class);
 
 		LogEntry logEntry = response.getEntity(LogEntry.class);
