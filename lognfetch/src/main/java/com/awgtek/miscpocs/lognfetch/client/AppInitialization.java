@@ -1,5 +1,7 @@
 package com.awgtek.miscpocs.lognfetch.client;
 
+import java.lang.management.ManagementFactory;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -12,6 +14,7 @@ import com.netflix.hystrix.contrib.servopublisher.HystrixServoMetricsPublisher;
 import com.netflix.hystrix.strategy.HystrixPlugins;
 
 import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.management.ManagementService;
 
 @WebListener("configures log4j property file")
 public class AppInitialization implements ServletContextListener {
@@ -26,7 +29,8 @@ public class AppInitialization implements ServletContextListener {
 			PropertyConfigurator.configure(log4jPropertyFilePath);
 		}
 		//initialize EHCache
-		CacheManager.newInstance();
+		CacheManager cacheManager = CacheManager.newInstance();
+		ManagementService.registerMBeans(cacheManager, ManagementFactory.getPlatformMBeanServer(), true, true, true, true);
 		
 		// Registry plugin with hystrix
 		HystrixPlugins.getInstance().registerMetricsPublisher(HystrixServoMetricsPublisher.getInstance());

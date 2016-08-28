@@ -1,7 +1,5 @@
 package com.awgtek.miscpocs.lognfetch.client;
 
-import java.net.MalformedURLException;
-
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
@@ -14,11 +12,15 @@ public class TestJMXConn {
       JMXServiceURL url = new JMXServiceURL("service:jmx:rmi:///jndi/rmi://localhost:8600/jmxrmi");
       JMXConnector connect = JMXConnectorFactory.connect(url);
       MBeanServerConnection mbsc = connect.getMBeanServerConnection();
-     // ObjectName o = new ObjectName("com.netflix.servo:name=countSuccess,instance=T6JmxStatCommand,type=HystrixCommand");
      // ObjectName o = new ObjectName("com.netflix.servo:name=countSuccess,type=HystrixCommand,instance=LogAndFetchRestServicePostCommand");
-      ObjectName o = new ObjectName("com.netflix.servo:name=countSuccess,type=HystrixCommand,instance=LogAndFetchRestServiceGetCommand");
+      ObjectName o = new ObjectName(
+    		  "com.netflix.servo:name=countSuccess,type=HystrixCommand,instance=LogAndFetchRestServiceGetCommand");
       Object value = mbsc.getAttribute(o, "value");
-      System.out.println("the value: " + value);
+      System.out.println("countSuccess: " + value);
+      o = new ObjectName(
+    		  "com.netflix.servo:name=isCircuitBreakerOpen,type=HystrixCommand,instance=LogAndFetchRestServiceGetCommand");
+      value = mbsc.getAttribute(o, "value");
+      System.out.println("isCircuitBreakerOpen: " + value);
       connect.close();
 
 

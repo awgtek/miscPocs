@@ -36,9 +36,15 @@ public class ClientServlet extends HttpServlet {
 		String logid = req.getParameter("logid");
 		Ehcache cache = CacheManager.getInstance().getEhcache("doGetCache");
 		Instant start = Instant.now();
-		if (cache.isKeyInCache(logid)) {
-			logEntry = (LogEntry) cache.get(logid).getObjectValue();
-		} else {
+		if (cache.isKeyInCache(logid)) { //inMemoryHits incremented
+			Element element = cache.get(logid);
+			if (element == null) { //CacheMisses incremented (somehow element is set to null instead of being removed upon invalidation?)
+				logger.debug("cache key {} found but element retrieved was null", logid);
+			} else {
+				logEntry = (LogEntry) cache.get(logid).getObjectValue();
+			}
+		} 
+		if (logEntry == null) {
 			logEntry = new LogAndFetchRestServiceGetCommand(logid).execute();
 			cache.put(new Element(logid, logEntry));
 		}
