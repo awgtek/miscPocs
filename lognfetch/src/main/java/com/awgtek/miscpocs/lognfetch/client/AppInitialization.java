@@ -34,6 +34,13 @@ public class AppInitialization implements ServletContextListener {
 		
 		// Registry plugin with hystrix
 		HystrixPlugins.getInstance().registerMetricsPublisher(HystrixServoMetricsPublisher.getInstance());
+		
+		try {
+			CreateAndRegisterMBeanInMBeanServer.main(null);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	@Override
