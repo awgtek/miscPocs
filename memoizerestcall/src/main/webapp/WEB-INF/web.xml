@@ -33,5 +33,10 @@ xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns
         <url-pattern>/client.jsp</url-pattern>
         <url-pattern>*.html</url-pattern>
 	</servlet-mapping>
+<!--     <listener> -->
+<!--     <listener-class> -->
+<!--         org.springframework.web.context.request.RequestContextListener -->
+<!--     </listener-class> -->
+<!--   </listener> -->
     
 </web-app>
