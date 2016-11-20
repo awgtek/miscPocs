@@ -42,6 +42,9 @@ dependency-reduced-pom.xml
 buildNumber.properties
 .mvn/timing.properties
 
+# Intellij
+.idea/
+
 # Eclipse Core
 .project
 
